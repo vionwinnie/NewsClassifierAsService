@@ -1,0 +1,22 @@
+resources:
+https://cloud.google.com/kubernetes-engine/docs/quickstart#local-shell
+
+
+1. After starting a cluster and called in "my-first-cluster-1", run this to get authentication credentials for the cluster
+
+gcloud container clusters get-credentials my-first-cluster-1 --zone us-central1-c
+
+2. Deploy the container
+kubectl apply -f deployment.yaml
+
+3. Create service - internal load balancer (for scaling the capacity)
+
+kubectl apply -f service.yaml
+
+4. Check service
+
+kubectl get service
+
+5. Get all details
+
+kubectl get svc,deployment,pods -o wide

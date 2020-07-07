@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: classifier
+  labels:
+    app: classifier
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: classifier
+  template:
+    metadata:
+      labels:
+        app: classifier
+    spec:
+      containers:
+      - name: quickstart-image
+        image: gcr.io/focus-chain-120819/quickstart-image:v5
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
