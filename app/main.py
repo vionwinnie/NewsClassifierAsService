@@ -22,13 +22,18 @@ with open(model_path,'rb') as feed:
 
 @app.route("/", methods=['POST'])
 def do_prediction():
-    json = request.get_json()
+    json = request.get_json(force=True)
+    #print(request.form['text'])
+    print(json)
     text = json['text']
     #df = loader.json_to_df(json)
     vectorized_question = tfidf.transform([text])
+    print(vectorized_question.shape)
     category_pred = model.predict(vectorized_question)
-    category_str = [category_dict.get(category_pred[y]for y in category_pred)]
-    return jsonify(category_str)
+    category_str  = [category_dict.get(pred) for pred in category_pred]
+    pred_dict = {'prediction':category_str}
+
+    return jsonify(pred_dict)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
